@@ -47,6 +47,15 @@ spring:
           predicates:
             - Path=/admin-static/assets/**, /admin-static/images/**, /admin-static/public/**
 
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowed-origins: "http://localhost:80"
+            allowed-methods: "GET, POST, PUT, DELETE, OPTIONS"
+            allowed-headers: "Authorization, Content-Type, Accept"
+            allow-credentials: true
+            max-age: 1800
+
   management:
     zipkin:
       tracing:
