@@ -1,7 +1,5 @@
 spring:
   cloud:
-    compatibility-verifier:
-      enabled: false
     gateway:
       routes:
         - id: tecnos-service
@@ -10,56 +8,44 @@ spring:
             - Path=/server/**
           filters:
             - RewritePath=/server/(?<segment>.*), /server/api/v1/${segment}
-
         - id: ui
           uri: http://client:3000
           predicates:
             - Path=/ui/**
           filters:
             - RewritePath=/ui/(?<segment>.*), /${segment}
-
         - id: next-assets
           uri: http://client:3000
           predicates:
-            - Path=/_next/static/**
+            - Path=/ui-static/_next/static/**
           filters:
-            - RewritePath=/_next/static/(?<filename>.*), /_next/static/${filename}
+            - RewritePath=/ui-static/_next/static/(?<filename>.*), /_next/static/${filename}
+        - id: media-files-ui
+          uri: http://client:3000
+          predicates:
+            - Path=/ui-static/assets/**, /ui-static/images/**, /ui-static/public/**
 
+        - id: admin-ui
+          uri: http://admin-client:3001
+          predicates:
+            - Path=/admin/**
+          filters:
+            - RewritePath=/admin/(?<segment>.*), /${segment}
+        - id: next-assets-admin
+          uri: http://admin-client:3001
+          predicates:
+            - Path=/admin-static/_next/static/**
+          filters:
+            - RewritePath=/admin-static/_next/static/(?<filename>.*), /_next/static/${filename}
+        - id: media-files
+          uri: http://admin-client:3001
+          predicates:
+            - Path=/admin-static/assets/**, /admin-static/images/**, /admin-static/public/**
 
-      globalcors:
-        corsConfigurations:
-          '[/**]':
-            allowed-origins: "http://localhost:8080"
-            allowed-methods: "GET, POST, PUT, DELETE, OPTIONS"
-            allowed-headers: "Authorization, Content-Type, Accept"
-            allow-credentials: true
-            max-age: 1800
-  application:
-    name: gateway
-
-server:
-  port: 8080
-
-metrics:
-  distribution:
-    percentiles-histogram:
-      http:
-        server:
-          request: true
-management:
-  tracing:
-    sampling:
-      probability: 1.0
-  zipkin:
-    tracing:
-      endpoint: http://zipkin:9411/api/v2/spans
-
-logging:
-  level:
-    org.springframework.web.cors: DEBUG
-    org.springframework.cloud.gateway: DEBUG
-  pattern:
-    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
+  management:
+    zipkin:
+      tracing:
+        endpoint: http://zipkin:9411/api/v2/spans
 
 logs:
   destination: logstash:3100

@@ -10,16 +10,8 @@ spring:
             - Path=/server/**
           filters:
             - RewritePath=/server/(?<segment>.*), /server/api/v1/${segment}
-
-        - id: courseservice
-          uri: http://localhost:8082
-          predicates:
-            - Path=/courses/**
-          filters:
-            - RewritePath=/courses/(?<segment>.*), /courses/api/v1/${segment}
-
         - id: ui
-          uri: http://localhost:3000
+          uri: http://localhost:3000/
           predicates:
             - Path=/ui/**
           filters:
@@ -28,10 +20,36 @@ spring:
         - id: next-assets
           uri: http://localhost:3000
           predicates:
-            - Path=/_next/static/**
+            - Path=/ui-static/_next/static/**
           filters:
-            - RewritePath=/_next/static/(?<filename>.*), /_next/static/${filename}
+            - RewritePath=/ui-static/_next/static/(?<filename>.*), /_next/static/${filename}
 
+        - id: media-files-ui
+          uri: http://localhost:3000
+          predicates:
+            - Path=/ui-static/assets/**, /ui-static/images/**, /ui-static/public/**
+
+        - id: admin-ui
+          uri: http://localhost:3001
+          predicates:
+            - Path=/admin/**
+          filters:
+            - RewritePath=/admin/(?<segment>.*), /${segment}
+
+
+
+        - id: next-assets-admin
+          uri: http://localhost:3001
+          predicates:
+            - Path=/admin-static/_next/static/**
+          filters:
+            - RewritePath=/admin-static/_next/static/(?<filename>.*), /_next/static/${filename}
+
+
+        - id: media-files
+          uri: http://localhost:3001
+          predicates:
+            - Path=/admin-static/assets/**, /admin-static/images/**, /admin-static/public/**
       globalcors:
         corsConfigurations:
           '[/**]':
@@ -72,7 +90,6 @@ management:
     endpoint:
       prometheus:
         enabled: true
-
   logging:
     pattern:
       level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
@@ -80,7 +97,6 @@ management:
       root: debug
     file:
       name: test.log
-
 
 logs:
   destination: localhost:3100
