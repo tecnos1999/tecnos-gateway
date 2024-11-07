@@ -3,7 +3,7 @@ spring:
     gateway:
       routes:
         - id: tecnos-service
-          uri: http://tecnos-service:8083
+          uri: http://tecnos-service:8081
           predicates:
             - Path=/server/**
           filters:
