@@ -4,6 +4,13 @@ spring:
       enabled: false
     gateway:
       routes:
+        - id: tecnos-cloud
+          uri: http://localhost:8082
+          predicates:
+            - Path=/cloud/**
+          filters:
+            - RewritePath=/cloud/(?<segment>.*), /cloud/api/v1/${segment}
+
         - id: tecnos-server
           uri: http://localhost:8081
           predicates:
