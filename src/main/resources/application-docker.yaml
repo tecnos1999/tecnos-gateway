@@ -57,7 +57,7 @@ spring:
       globalcors:
         corsConfigurations:
           '[/**]':
-            allowed-origins: "https://localhost:8080", https://89.33.44.227 , http://89.33.44.227:8080"
+            allowed-origins: "https://localhost:8080 , https://89.33.44.227 , http://89.33.44.227:8080"
             allowed-methods: "GET, POST, PUT, DELETE, OPTIONS"
             allowed-headers: "Authorization, Content-Type, Accept"
             allow-credentials: true
