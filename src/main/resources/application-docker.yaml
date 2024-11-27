@@ -21,14 +21,14 @@ spring:
           predicates:
             - Path=/ui/**
           filters:
-            - RewritePath=/ui/(?<segment>.*), /${segment}
+            - RewritePath=/ui/(?<segment>.*), /ui/${segment}
 
         - id: next-assets
           uri: http://clientapp:3000
           predicates:
-            - Path=/ui-static/_next/static/**
+            - Path=/ui-static/**
           filters:
-            - RewritePath=/ui-static/_next/static/(?<filename>.*), /_next/static/${filename}
+            - RewritePath=/ui-static/(?<path>.*), /${path}
 
         - id: media-files-ui
           uri: http://clientapp:3000
