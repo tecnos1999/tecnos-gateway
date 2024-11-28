@@ -16,13 +16,6 @@ spring:
           filters:
             - RewritePath=/server/(?<segment>.*), /server/api/v1/${segment}
 
-        - id: ui
-          uri: http://clientapp:3000
-          predicates:
-            - Path=/ui/**
-          filters:
-            - RewritePath=/ui/(?<segment>.*), /${segment}
-
         - id: next-assets
           uri: http://clientapp:3000
           predicates:
@@ -35,12 +28,12 @@ spring:
           predicates:
             - Path=/ui-static/assets/**, /ui-static/images/**, /ui-static/public/**
 
-        - id: admin-ui
-          uri: http://tecnos-management:3001
+        - id: ui
+          uri: http://clientapp:3000
           predicates:
-            - Path=/admin/**
+            - Path=/ui/**
           filters:
-            - RewritePath=/admin/(?<segment>.*), /${segment}
+            - RewritePath=/ui/(?<segment>.*), /${segment}
 
         - id: next-assets-admin
           uri: http://tecnos-management:3001
@@ -53,6 +46,13 @@ spring:
           uri: http://tecnos-management:3001
           predicates:
             - Path=/admin-static/assets/**, /admin-static/images/**, /admin-static/public/**
+
+        - id: admin-ui
+          uri: http://tecnos-management:3001
+          predicates:
+            - Path=/admin/**
+          filters:
+            - RewritePath=/admin/(?<segment>.*), /${segment}
 
       globalcors:
         corsConfigurations:
