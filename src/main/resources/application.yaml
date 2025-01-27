@@ -18,20 +18,6 @@ spring:
           filters:
             - RewritePath=/server/(?<segment>.*), /server/api/v1/${segment}
 
-        - id: kibana
-          uri: http://localhost:5601
-          predicates:
-            - Path=/kibana/**
-          filters:
-            - RewritePath=/kibana/(?<segment>.*), /${segment}
-
-        - id: grafana
-          uri: http://localhost:3000
-          predicates:
-            - Path=/grafana/**
-          filters:
-            - RewritePath=/grafana/(?<segment>.*), /${segment}
-
         - id: ui
           uri: http://localhost:3000/
           predicates:
@@ -72,6 +58,20 @@ spring:
           uri: http://localhost:3001
           predicates:
             - Path=/admin-static/assets/**, /admin-static/images/**, /admin-static/public/**
+
+        - id: kibana
+          uri: http://kibana:5601
+          predicates:
+              - Path=/kibana/**
+          filters:
+              - RewritePath=/kibana/(?<segment>.*), /${segment}
+
+        - id:  grafana
+          uri: http://localhost:3200
+          predicates:
+              - Path=/grafana/**
+
+
       globalcors:
         corsConfigurations:
           '[/**]':
