@@ -54,23 +54,20 @@ spring:
           filters:
             - RewritePath=/admin/(?<segment>.*), /${segment}
 
-        # Kibana Route
         - id: kibana
           uri: http://kibana:5601
           predicates:
-            - Path=/kibana/**, /kibana
+            - Path=/kibana/**
           filters:
-            - StripPrefix=1
-            - RewritePath=/(?<segment>.*), /${segment}
+            - RewritePath=/kibana/(?<segment>.*), /${segment}
 
-        # Grafana Route
         - id: grafana
-          uri: http://grafana:3000
+          uri: http://grafana:3200
           predicates:
-            - Path=/grafana/**, /grafana
+            - Path=/grafana/**
           filters:
-            - StripPrefix=1
-            - RewritePath=/(?<segment>.*), /${segment}
+            - RewritePath=/grafana/(?<segment>.*), /${segment}
+
 
 
       globalcors:

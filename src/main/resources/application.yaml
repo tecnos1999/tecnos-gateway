@@ -59,23 +59,20 @@ spring:
           predicates:
             - Path=/admin-static/assets/**, /admin-static/images/**, /admin-static/public/**
 
-        # Kibana Route
         - id: kibana
           uri: http://localhost:5601
           predicates:
-            - Path=/kibana/**, /kibana
+            - Path=/kibana/**
           filters:
-            - StripPrefix=1
-            - RewritePath=/(?<segment>.*), /${segment}
+            - RewritePath=/kibana/(?<segment>.*), /${segment}
 
-        # Grafana Route
         - id: grafana
-          uri: http://localhost:3000
+          uri: http://localhost:3200
           predicates:
-            - Path=/grafana/**, /grafana
+            - Path=/grafana/**
           filters:
-            - StripPrefix=1
-            - RewritePath=/(?<segment>.*), /${segment}
+            - RewritePath=/grafana/(?<segment>.*), /${segment}
+
 
 
 
