@@ -21,14 +21,18 @@ spring:
           predicates:
             - Path=/kibana/**
           filters:
-            - RewritePath=/kibana/(?<segment>.*), /${segment}
+            - StripPrefix=1
+            - RewritePath=/(?<segment>.*), /${segment}
+            - AddResponseHeader=Access-Control-Allow-Origin, *
 
         - id: grafana
           uri: http://grafana:3000
           predicates:
             - Path=/grafana/**
           filters:
-            - RewritePath=/grafana/(?<segment>.*), /${segment}
+            - StripPrefix=1
+            - RewritePath=/(?<segment>.*), /${segment}
+            - AddResponseHeader=Access-Control-Allow-Origin, *
 
         - id: next-assets
           uri: http://clientapp:3000
